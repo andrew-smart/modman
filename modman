@@ -568,7 +568,7 @@ if [ "$action" = "list" ]; then
 # Handle "list-clones" command
 elif [ "$action" = "list-clones" ]; then
   if [ -n "$1" ]; then echo "Too many arguments to list command."; exit 1; fi
-  ls -1 "$mm" | wwhile read -d $'\n' module; do
+  ls -1 "$mm" | while read -d $'\n' module; do
     if [ -d "$mm/$module" -a -e "$mm/$module/modman" ]; then
       cd "$mm/$module"
       if [ -d "$mm/$module/.git" ]; then
