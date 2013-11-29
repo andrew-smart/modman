@@ -573,7 +573,8 @@ elif [ "$action" = "list-clones" ]; then
       cd "$mm/$module"
       if [ -d "$mm/$module/.git" ]; then
         git fetch
-        SRH=$(git symbolic-ref --short HEAD)
+        SRH=$(git symbolic-ref HEAD 2> /dev/null | sed 's/refs.heads.//') || \
+        SRH=$(git rev-parse --short HEAD 2> /dev/null)
         ORP=$(git rev-parse --short origin/$SRH)
         RP=$(git rev-parse --short $SRH)
         echo "modman clone" $(git config --get remote.origin.url) --branch "$SRH"
