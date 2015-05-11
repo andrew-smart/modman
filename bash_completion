@@ -18,7 +18,7 @@ _modman()
 			opts="init --help --version --tutorial"
 			if [ -n "$mm" ]; then
 				opts="${opts} list status incoming update-all deploy-all repair clean"
-				opts="${opts} checkout clone hgclone link deploy update remove"
+				opts="${opts} checkout clone hgclone link undeploy skip unskip deploy update remove automodman"
 			fi
 			;;
 		init | --help | --version | --tutorial | list | status | incoming | repair | clean | --force | --copy)
@@ -28,13 +28,13 @@ _modman()
 			opts="--force --no-clean --no-local"
 			;;
 		deploy | update)
-			opts="$(modman list) --force --no-clean --no-local"
+			opts="$(modman list) --force --no-clean --no-local --no-shell"
 			;;
-		remove)
+		remove | automodman | undeploy)
 			opts=$(modman list)
 			;;
 		*)
-			[ -d "$mm/${prev}" ] && opts="--force --no-clean --no-local"
+			[ -d "$mm/${prev}" ] && opts="--force --no-clean --no-local --no-shell"
 			;;
 	esac
 	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
